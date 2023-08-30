@@ -34,7 +34,7 @@ public class GestionnaireMouvementJoueur : NetworkBehaviour
      * les différents clients.
      * 1.Récupération des Inputs mémorisés dans le script GestionnaireReseau (input.set). Ces données enregistrées
      * sous forme de structure de données (struc) doivent être récupérées sous la même forme.
-     * 2.Ajustement de la direction du joueur à partir à partir des données de Input enregistrés dans les script
+     * 2.Ajustement de la direction du joueur à partir des données de Input enregistrés dans les script
      * GestionnaireRéseau et GestionnaireInputs.
      * 3. Correction du vecteur de rotation pour garder seulement la rotation Y pour le personnage (la capsule)
      * 4.Calcul du vecteur de direction du déplacement en utilisant les données de Input enregistrés.

@@ -17,5 +17,4 @@ public struct DonneesInputReseau : INetworkInput
     public Vector2 mouvementInput;
     public Vector3 vecteurDevant;
     public NetworkBool saute;
-
 }

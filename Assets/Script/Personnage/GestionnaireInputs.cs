@@ -7,7 +7,7 @@ using UnityEngine;
  * Dérive de MonoBehavior
  * Exécution locale. Les données seront transmises au réseau sur demande
  * Variables
- * - mouvementInputVecteur :Vector2 pour mémoriser axes vertical et horizontal
+ * - mouvementInputVecteur : Vector2 pour mémoriser axes vertical et horizontal
  * - vueInputVecteur : Vector2 pour mémoriser les déplacements de la souris, horizontal et vertical.
  * - ilSaute : bool qui sera activée lorsque le joueur saute
  * - GestionnaireCameraLocale : pour mémoriser le component GestionnaireCameraLocale de la caméra du joueur
@@ -62,7 +62,7 @@ public class GestionnaireInputs : MonoBehaviour
     }
 
     /*
-     * Fonction qui sera appelée par le Runner qui gère la simulation (GestionnaireReseau). 
+     * Fonction qui sera appelée par le Runner qui gère la simulation (GestionnaireReseau).
      * Lorsqu'elle est appelée, son rôle est de :
      * 1. créer une structure de données (struc) à partir du modèle DonneesInputReseau;
      * 2. définir les trois variables de la structure (mouvement, vecteurDevant et saute);

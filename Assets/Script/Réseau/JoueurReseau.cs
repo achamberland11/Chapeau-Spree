@@ -24,6 +24,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 
     public override void Spawned() //3.
     {
+        // Object est l'équivalant de gameObject pour les objets réseaux
         if (Object.HasInputAuthority)
         {
             Local = this;
