@@ -14,6 +14,11 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     // Contient la référence au script JoueurReseau du Prefab
     public JoueurReseau joueurPrefab;
 
+    // Tableau de couleurs à définir dans l'inspecteur
+    public Color[] couleurJoueurs;
+    // Pour compteur le nombre de joueurs connectés
+    public int nbJoueurs = 0;
+
     // pour mémoriser le component GestionnaireMouvementPersonnage du joueur
     GestionnaireInputs gestionnaireInputs; 
 
@@ -41,6 +46,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = mode,
             SessionName = "Chambre test",
             Scene = SceneManager.GetActiveScene().buildIndex,
+            PlayerCount = 3, //ici, on limite à 3 joueurs
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
 
         });
@@ -124,7 +130,15 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         if (_runner.IsServer)
         {
             Debug.Log("Un joueur s'est connecté comme serveur. Spawn d'un joueur");
-            _runner.Spawn(joueurPrefab, Utilitaires.GetPositionSpawnAleatoire(), Quaternion.identity, player);
+            /*On garde la référence au nouveau joueur créé par le serveur. La variable locale
+             créée est de type JoueurReseau (nom du script qui contient la fonction Spawned()*/
+            JoueurReseau nvJoueur = _runner.Spawn(joueurPrefab, Utilitaires.GetPositionSpawnAleatoire(), Quaternion.identity, player);
+            /*On change la variable maCouleur du nouveauJoueur et on augmente le nombre de joueurs connectés
+            Comme j'ai seulement 3 couleurs de définies, je m'assure de ne pas dépasser la longueur de mon
+            tableau*/
+            nvJoueur.maCouleur = couleurJoueurs[nbJoueurs];
+            nbJoueurs++;
+            if (nbJoueurs >= 2) nbJoueurs = 0;
         }
         else
         {
@@ -157,9 +171,17 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
+    /*
+     * Fonction appelée lorsqu'une connexion réseau est refusée ou lorsqu'un client perd
+     * la connexion suite à une erreur réseau. Le paramètre ShutdownReason est une énumération (enum)
+     * contenant différentes causes possibles.
+     */
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        
+        if (shutdownReason == ShutdownReason.GameIsFull)
+        {
+            Debug.Log("Le maximum de joueur est atteint. Réessayer plus tard");
+        }
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)

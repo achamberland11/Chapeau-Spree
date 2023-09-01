@@ -17,10 +17,22 @@ using Fusion; // namespace pour utiliser les classes de Fusion
 
 public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 {
+    //Variable qui sera automatiquement synchronisée par le serveur sur tous les clients
+    [Networked] public Color maCouleur { get; set; }
+
     public static JoueurReseau Local; //.2
 
     public Transform modeleJoueur;
 
+
+    /*
+    * Au départ, on change la couleur du joueur. La variable maCouleur sera définie
+    * par le serveur dans le script GestionnaireReseau.La fonction Start() sera appelée après la fonction Spawned().
+    */
+    private void Start()
+    {
+        GetComponentInChildren<MeshRenderer>().material.color = maCouleur;
+    }
 
     public override void Spawned() //3.
     {

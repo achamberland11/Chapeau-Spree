@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _maCouleur: {r: 0, g: 0, b: 0, a: 0}
   modeleJoueur: {fileID: 704816600920233354}
 --- !u!114 &1581680135826441867
 MonoBehaviour:
