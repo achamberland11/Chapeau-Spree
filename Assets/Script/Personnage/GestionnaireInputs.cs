@@ -20,6 +20,7 @@ public class GestionnaireInputs : MonoBehaviour
     bool ilSaute;
     bool ilTir = false;
     GestionnaireCameraLocale gestionnaireCameraLocale;
+    GestionnaireMouvementPersonnage gestionnaireMouvementPersonnage;
 
     /*
      * Avant le Start(), on mémorise la référence au component GestionnaireCameraLocale de la caméra du joueur
@@ -27,6 +28,7 @@ public class GestionnaireInputs : MonoBehaviour
     void Awake()
     {
         gestionnaireCameraLocale = GetComponentInChildren<GestionnaireCameraLocale>();
+        gestionnaireMouvementPersonnage = GetComponentInChildren<GestionnaireMouvementPersonnage>();
     }
 
     /*
@@ -49,8 +51,8 @@ public class GestionnaireInputs : MonoBehaviour
     void Update()
     {
         // Optimisation : on exécute seulement le Update si le client contrôle ce joueur
-        //if (!GestionnaireMouvementPersonnage.Object.HasInputAuthority)
-        //    return;
+        if (!gestionnaireMouvementPersonnage.Object.HasInputAuthority)
+            return;
 
         // Déplacement
         mouvementInputVecteur.x = Input.GetAxis("Horizontal");
