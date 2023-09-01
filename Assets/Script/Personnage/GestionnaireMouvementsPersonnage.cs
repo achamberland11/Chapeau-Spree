@@ -13,7 +13,7 @@ using System;
  * du joueur
  */
 
-public class GestionnaireMouvementJoueur : NetworkBehaviour
+public class GestionnaireMouvementPersonnage : NetworkBehaviour
 {
     Camera camLocale;
     NetworkCharacterControllerPrototypeV2 networkCharacterControllerPrototypeV2;
