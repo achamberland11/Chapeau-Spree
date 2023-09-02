@@ -17,7 +17,5 @@ public struct DonneesInputReseau : INetworkInput
     public Vector2 mouvementInput;
     public Vector3 vecteurDevant;
     public NetworkBool saute;
-    /* pour le serveur : permet de savoir si le joueur a appuyé sur le bouton de tir
-    la variable sera définie dans le script GestionnaireInputs*/
     public NetworkBool appuieBoutonTir;
 }
