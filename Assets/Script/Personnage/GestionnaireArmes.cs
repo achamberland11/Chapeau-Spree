@@ -53,6 +53,29 @@ public class GestionnaireArmes : NetworkBehaviour
     }
 
 
+    /*
+    * Fonction qui détecte le tir et déclenche tout le processus
+    * 1. Si le joueur est mort, on ne veut pas qu'il puisse tirer. On quitte la fonction immédiatement
+    * 2.On récupère les données enregistrées dans la structure de données donneesInputReseau et on 
+    * vérifie la variable appuieBoutonTir. Si elle est à true, on active la fonction TirLocal en passant
+    * comme paramètre le vector indiquant le devant du personnage.
+    */
+    public override void FixedUpdateNetwork()
+    {
+        //1.
+        if (gestionnairePointsDeVie.estMort)
+            return;
+        //2.
+        if (GetInput(out DonneesInputReseau donneesInputReseau))
+        {
+            if (donneesInputReseau.appuieBoutonTir)
+            {
+                TirLocal(donneesInputReseau.vecteurDevant);
+            }
+        }
+    }
+
+
     /* Gestion locale du tir (sur le client)
     * 1.On sort de la fonction si le tir ne respecte pas le délai entre 2 tir.
     * 2.Appel de la coroutine qui activera les particules et lancera le Tir pour le réseau (autres clients)
@@ -93,6 +116,13 @@ public class GestionnaireArmes : NetworkBehaviour
         {
             Debug.Log($"{Time.time} {transform.name} a touché le joueur {infosCollisions.Hitbox.transform.root.name}");
             toucheAutreJoueur = true;
+
+            // si nous sommes sur le code exécuté sur le serveur :
+            // On appelle la fonction PersoEstTouche du joueur touché dans le script GestionnairePointsDeVie
+            if (Object.HasStateAuthority)
+            {
+                infosCollisions.Hitbox.transform.root.GetComponent<GestionnairePointsDeVie>().PersoEstTouche();
+            }
         }
         else if (infosCollisions.Collider != null)
         {
