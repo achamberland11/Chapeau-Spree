@@ -38,7 +38,7 @@ public class GestionnaireMouvementPersonnage : NetworkBehaviour
     /*
      * Fonction récursive réseau pour la simulation. À utiliser pour ce qui doit être synchronisé entre
      * les différents clients.
-     * 1.Récupération des Inputs mémorisés dans le script GestionnaireReseau (input.set). Ces données enregistrées
+     * 1.Récupération des Inputs mémorisés dans le script GestionnaireReseau (input.Set). Ces données enregistrées
      * sous forme de structure de données (struc) doivent être récupérées sous la même forme.
      * 2.Ajustement de la direction du joueur à partir des données de Input enregistrés dans les script
      * GestionnaireRéseau et GestionnaireInputs.

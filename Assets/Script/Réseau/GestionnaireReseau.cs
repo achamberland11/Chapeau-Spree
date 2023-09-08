@@ -25,7 +25,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     // Fonction asynchrone pour démarrer Fusion et créer une partie 
     async void CreationPartie(GameMode mode)
     {
-        /*  1.Ajout du component NetworkRunne au gameObject. On garde en mémoire
+        /*  1.Ajout du component NetworkRunner au gameObject. On garde en mémoire
             la référence à ce component dans la variable _runner.
             2.Indique au NetworkRunner qu'il doit fournir les entrées (inputs) au  
             simulateur (Fusion)
@@ -99,7 +99,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     /* Fonction du Runner pour définir les inputs du client dans la simulation
          * 1. On récupère le component GestionnaireInputs du joueur local
          * 2. On définit (set) le paramètre input en lui donnant la structure de données (struc) qu'on récupère
-         * en appelant la fonction GestInputReseau du script GestionnaireInputs. Les valeurs seront mémorisées
+         * en appelant la fonction GetInputReseau du script GestionnaireInputs. Les valeurs seront mémorisées
          * et nous pourrons les utilisées pour le déplacement du joueur dans un autre script. Ouf...*/
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
