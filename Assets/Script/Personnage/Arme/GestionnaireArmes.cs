@@ -42,6 +42,7 @@ public class GestionnaireArmes : NetworkBehaviour
 
     [Header("Prefabs")]
     public GameObject prefabGrenade; // Prefab de la grenade à définir dans l'inspecteur
+    public GameObject prefabFusee; // Prefab de la fusée. À définir dans l'inspecteur
     public ParticleSystem particulesTir;
 
 
@@ -51,6 +52,7 @@ public class GestionnaireArmes : NetworkBehaviour
 
     //Timer réseau
     TickTimer delaiTirGrenade = TickTimer.None;
+    TickTimer delaiTirfusee = TickTimer.None;
 
     string nomTireur;
 
@@ -92,6 +94,10 @@ public class GestionnaireArmes : NetworkBehaviour
             if (donneesInputReseau.appuieBoutonGrenade)
             {
                 LanceGrenade(donneesInputReseau.vecteurDevant);
+            }
+            if (donneesInputReseau.appuieBoutonFusee)
+            {
+                LanceFusee(donneesInputReseau.vecteurDevant);
             }
         }
     }
@@ -259,6 +265,50 @@ public class GestionnaireArmes : NetworkBehaviour
             });
             //5.
             delaiTirGrenade = TickTimer.CreateFromSeconds(Runner, 1f);
+        }
+    }
+
+
+    /* Fonction qui permet de faire apparaitre une fusée (spawn)sur tous les client connectés.
+     * Paramètre vecteurDevant : Orientation du personnage dans le monde. La fusée sera lancé dans cette direction
+     * 1.Vérification du Timer. S'il est expiré ou ne s'exécute pas :
+     * 2.Calcul de la position de départ de la fusée qui sera créée.Pour éviter un contact avec soi-même, on s'assure de
+     * la faire apparaître un peu plus loins devant.
+     * 3. Calcul de l'orientation de départ de la fusée qui sera créée. Son axe des Z sera orienté selon 
+     * l'axe des Z du personnage.
+     * 
+     * 4.Cette commande est propre au serveur et ne sera pas exécutée sur les clients.
+     * Génération d'une fusée (spawn) à la position et orientation déterminées.
+     * Il faut également précisé le joueur qui aura le InputAuthority sur cette fusée
+     * 
+     * La partie suivante est une expression Lambda permettant une fonction anonyme qui s'exécutera tout juste après
+     * la création (spawn) de la fusée.Voici son fonctionnement : Lorsque le spawn est fait, deux paramètres sont reçus,
+     * soit runner et laFusee. laFusee contient la référence au NetworkObjet créé (la fusée...). On appelle la fonction
+     * LanceFusée() préssente dans le script GestionnaireFusee de la nouvelle fusée créée. Trois paramètres sont passés:
+     * A- Le joueur qui a l'InputAuthority sur la fusée. Cela deviendra le lanceur
+     * B- La référence au component NetworkObject de joueur qui lance la fusée. Cela deviendra lanceurNetworkObject
+     * C- Le nom du joueur qui lance la fusée. Cela deviendra le nom du lanceur
+     * 
+     * //5. Timer propre a fusion. Permet de créer une temporisation pour éviter qu'on puisse tirer des fusées trop rapidement.
+     */
+    private void LanceFusee(Vector3 vecteurDevant)
+    {
+        //1.
+        if (delaiTirfusee.ExpiredOrNotRunning(Runner))
+        {
+            //2.
+            Vector3 positionFusee = origineTir.position + vecteurDevant * 1.5f;
+            //3.
+            Quaternion orientationFusee = Quaternion.LookRotation(vecteurDevant);
+
+            //4.
+            // commande exécutée juste sur le serveur uniquement
+            Runner.Spawn(prefabFusee, positionFusee, orientationFusee, Object.InputAuthority, (runner, laFusee) =>
+            {
+                laFusee.GetComponent<GestionnaireFusee>().LanceFusee(Object.InputAuthority, networkObject, joueurReseau.nomDujoueur.ToString());
+            });
+            //5.
+            delaiTirfusee = TickTimer.CreateFromSeconds(Runner, 3f);
         }
     }
 }

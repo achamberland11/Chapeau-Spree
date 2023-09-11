@@ -20,6 +20,7 @@ public class GestionnaireInputs : MonoBehaviour
     bool ilSaute;
     bool ilTir = false;
     bool ilLanceGrenade = false;
+    bool ilLanceFusee = false;
     GestionnaireCameraLocale gestionnaireCameraLocale;
     GestionnaireMouvementPersonnage gestionnaireMouvementPersonnage;
 
@@ -75,6 +76,10 @@ public class GestionnaireInputs : MonoBehaviour
         // Grenade
         if (Input.GetKeyDown(KeyCode.G))
             ilLanceGrenade = true;
+
+        // fusée
+        if (Input.GetButtonDown("Fire2"))
+            ilLanceFusee = true;
     }
 
     /*
@@ -94,12 +99,14 @@ public class GestionnaireInputs : MonoBehaviour
             vecteurDevant = gestionnaireCameraLocale.gameObject.transform.forward,
             saute = ilSaute,
             appuieBoutonTir = ilTir,
-            appuieBoutonGrenade = ilLanceGrenade
-        };
+            appuieBoutonGrenade = ilLanceGrenade,
+            appuieBoutonFusee = ilLanceFusee
+    };
 
         ilSaute = false;
         ilTir = false;
         ilLanceGrenade = false;
+        ilLanceFusee = false;
 
         return donneesInputReseau;
 
