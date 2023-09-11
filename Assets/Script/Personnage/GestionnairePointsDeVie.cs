@@ -89,13 +89,19 @@ public class GestionnairePointsDeVie : NetworkBehaviour
      * Important : souvenez-vous que les variables ptsVie et estMort sont de type [Networked] et qu'une 
      * fonction sera automatiquement appelée lorsque leur valeur change.
     */
-    public void PersoEstTouche()
+    public void PersoEstTouche(string dommageFaitParQui, byte dommage)
     {
         //1.
         if (estMort)
             return;
+
+        // Pour éviter que la variable ptsVie (de type byte) descende en bas de 0. Rappelons que la valeur
+        // Rappelons qu'un byte se situe entre 0 et 255.
+        if (dommage > ptsVie)
+            dommage = ptsVie;
+
         //2.
-        ptsVie -= 1;
+        ptsVie -= dommage;
         Debug.Log($"{Time.time} {transform.name} est touché. Il lui reste {ptsVie} points de vie");
 
         //3.

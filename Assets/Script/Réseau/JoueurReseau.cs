@@ -24,6 +24,8 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 
     public Transform modeleJoueur;
 
+    public string nomDujoueur = "Hancock";
+
 
     /*
     * Au départ, on change la couleur du joueur. La variable maCouleur sera définie

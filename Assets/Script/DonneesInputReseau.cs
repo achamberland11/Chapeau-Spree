@@ -18,4 +18,5 @@ public struct DonneesInputReseau : INetworkInput
     public Vector3 vecteurDevant;
     public NetworkBool saute;
     public NetworkBool appuieBoutonTir;
+    public NetworkBool appuieBoutonGrenade;
 }

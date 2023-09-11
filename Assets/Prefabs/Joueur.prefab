@@ -320,6 +320,7 @@ MonoBehaviour:
     m_Bits: 129
   distanceTir: 100
   particulesTir: {fileID: 5905929638090290818}
+  prefabGrenade: {fileID: 6026458204599858278, guid: 79db7b820cd9aa041ac6c26d1887ad8a, type: 3}
 --- !u!114 &5042496552766154035
 MonoBehaviour:
   m_ObjectHideFlags: 0
