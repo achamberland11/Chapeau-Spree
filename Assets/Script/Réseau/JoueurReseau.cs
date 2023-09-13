@@ -19,12 +19,16 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 {
     //Variable qui sera automatiquement synchronisée par le serveur sur tous les clients
     [Networked] public Color maCouleur { get; set; }
+    [Networked] public int indexJoueur { get; set; }
 
     public static JoueurReseau Local; //.2
 
     public Transform modeleJoueur;
 
     public string nomDujoueur = "Hancock";
+
+    // Un chapeau est assigné en fonction de son index
+    [SerializeField] GameObject[] chapeau;
 
 
     /*
@@ -34,6 +38,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     private void Start()
     {
         GetComponentInChildren<MeshRenderer>().material.color = maCouleur;
+        chapeau[indexJoueur].SetActive(true);
     }
 
     public override void Spawned() //3.

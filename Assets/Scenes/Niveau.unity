@@ -9038,6 +9038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joueurPrefab: {fileID: 3835071951349023269, guid: 0993121f975e5c541ac73d051aa21d38, type: 3}
+  nbJoueurs: 0
   couleurJoueurs:
   - {r: 0.8867924, g: 0.25655627, b: 0.25655627, a: 1}
   - {r: 0.25077128, g: 0.745283, b: 0.25077128, a: 1}
@@ -9048,7 +9049,6 @@ MonoBehaviour:
   - {r: 0.21568629, g: 0.6070292, b: 0.7921569, a: 1}
   - {r: 0.21568629, g: 0.7921569, b: 0.4681706, a: 1}
   - {r: 0.29615515, g: 0.8867924, b: 0.8450455, a: 1}
-  nbJoueurs: 0
 --- !u!4 &1197866950
 Transform:
   m_ObjectHideFlags: 0

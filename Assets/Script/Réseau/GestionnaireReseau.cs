@@ -14,10 +14,11 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     // Contient la référence au script JoueurReseau du Prefab
     public JoueurReseau joueurPrefab;
 
-    // Tableau de couleurs à définir dans l'inspecteur
-    public Color[] couleurJoueurs;
     // Pour compteur le nombre de joueurs connectés
     public int nbJoueurs = 0;
+
+    // Tableau de couleurs à définir dans l'inspecteur
+    public Color[] couleurJoueurs;
 
     // pour mémoriser le component GestionnaireMouvementPersonnage du joueur
     GestionnaireInputs gestionnaireInputs; 
@@ -134,9 +135,9 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
              créée est de type JoueurReseau (nom du script qui contient la fonction Spawned()*/
             JoueurReseau nvJoueur = _runner.Spawn(joueurPrefab, Utilitaires.GetPositionSpawnAleatoire(), Quaternion.identity, player);
             /*On change la variable maCouleur du nouveauJoueur et on augmente le nombre de joueurs connectés
-            Comme j'ai seulement 3 couleurs de définies, je m'assure de ne pas dépasser la longueur de mon
-            tableau*/
+            Comme j'ai seulement 9 couleurs de définies, je m'assure de ne pas dépasser la longueur de mon tableau*/
             nvJoueur.maCouleur = couleurJoueurs[nbJoueurs];
+            nvJoueur.indexJoueur = nbJoueurs;
             nbJoueurs++;
             if (nbJoueurs >= 9) nbJoueurs = 0;
         }
