@@ -46,7 +46,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = mode,
             SessionName = "Chambre test",
             Scene = SceneManager.GetActiveScene().buildIndex,
-            PlayerCount = 3, //ici, on limite à 3 joueurs
+            PlayerCount = 9, //ici, on limite à 9 joueurs
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
 
         });
@@ -138,7 +138,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
             tableau*/
             nvJoueur.maCouleur = couleurJoueurs[nbJoueurs];
             nbJoueurs++;
-            if (nbJoueurs >= 2) nbJoueurs = 0;
+            if (nbJoueurs >= 9) nbJoueurs = 0;
         }
         else
         {
