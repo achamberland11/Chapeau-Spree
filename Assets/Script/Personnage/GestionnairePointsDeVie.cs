@@ -244,6 +244,8 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         chapeauARamasser.GetComponent<Rigidbody>().isKinematic = false;
         chapeauARamasser.GetComponent<Rigidbody>().useGravity = true;
         chapeauARamasser.GetComponent<Collider>().enabled = true;
+        chapeauARamasser.GetComponent<SphereCollider>().enabled = true;
+        chapeauARamasser.AddComponent<Chapeau>();
         //2.
         gestionnaireMouvementPersonnage.ActivationCharacterController(false);
         //3.

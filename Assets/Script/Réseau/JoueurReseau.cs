@@ -20,6 +20,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     //Variable qui sera automatiquement synchronisée par le serveur sur tous les clients
     [Networked] public Color maCouleur { get; set; }
     [Networked] public int indexJoueur { get; set; }
+    [Networked] public int pointage { get; set; }
 
     public static JoueurReseau Local; //.2
 
@@ -29,6 +30,9 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 
     // Un chapeau est assigné en fonction de son index
     public GameObject[] chapeau;
+
+    // Représente la liste des chapeau obtenu par le joueur
+    List<GameObject> chapeauxObtenus = new List<GameObject>();
 
 
     /*
