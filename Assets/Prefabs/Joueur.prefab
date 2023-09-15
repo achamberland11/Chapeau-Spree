@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 6953976089422373173}
   m_Layer: 7
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
