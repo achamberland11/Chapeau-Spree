@@ -223,7 +223,7 @@ public class GestionnairePointsDeVie : NetworkBehaviour
     }
 
     /* Fonction appelée à la mort du personnage.
-     * 1. Désactivation du joueur et de son hitboxroot qui sert à la détection de collision
+     * 1. Désactivation du joueur et de son hitboxroot qui sert à la détection de collision + faire tomber son chapeau
      * 2. Appelle de la fonction ActivationCharacterController(false) dans le scriptgestionnaireMouvementPersonnage
      * pour désactiver le CharacterConroller.
      * 3. Instanciation d'un système de particules (particulesMort_Prefab) à la place du joueur. On modifie
@@ -235,6 +235,15 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         //1.
         modelJoueur.gameObject.SetActive(false);
         hitboxRoot.HitboxRootActive = false;
+        GameObject chapeauActif = joueurReseau.chapeau[joueurReseau.indexJoueur];
+        chapeauActif.SetActive(false);
+        GameObject chapeauARamasser = Instantiate(chapeauActif);
+        chapeauARamasser.transform.position = chapeauActif.transform.position;
+        chapeauARamasser.transform.parent = null;
+        chapeauARamasser.SetActive(true);
+        chapeauARamasser.GetComponent<Rigidbody>().isKinematic = false;
+        chapeauARamasser.GetComponent<Rigidbody>().useGravity = true;
+        chapeauARamasser.GetComponent<Collider>().enabled = true;
         //2.
         gestionnaireMouvementPersonnage.ActivationCharacterController(false);
         //3.
@@ -254,6 +263,7 @@ public class GestionnairePointsDeVie : NetworkBehaviour
      */
     private void Resurrection()
     {
+        joueurReseau.ActiverChapeau();
         //1.
         if (Object.HasInputAuthority)
             uiImageTouche.color = new Color(0, 0, 0, 0);

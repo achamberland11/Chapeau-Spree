@@ -28,7 +28,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     public string nomDujoueur = "Hancock";
 
     // Un chapeau est assigné en fonction de son index
-    [SerializeField] GameObject[] chapeau;
+    public GameObject[] chapeau;
 
 
     /*
@@ -38,7 +38,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     private void Start()
     {
         GetComponentInChildren<MeshRenderer>().material.color = maCouleur;
-        chapeau[indexJoueur].SetActive(true);
+        ActiverChapeau();
     }
 
     public override void Spawned() //3.
@@ -68,6 +68,11 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
 
             Debug.Log("Un joueur réseau a été créé");
         }
+    }
+
+    public void ActiverChapeau()
+    {
+        chapeau[indexJoueur].SetActive(true);
     }
 
     public void PlayerLeft(PlayerRef player) //.4
