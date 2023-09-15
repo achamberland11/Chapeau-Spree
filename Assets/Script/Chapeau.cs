@@ -18,7 +18,7 @@ public class Chapeau : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Fantome")
         {
             collision.gameObject.GetComponent<JoueurReseau>().pointage++;
             Debug.Log(collision.gameObject.GetComponent<JoueurReseau>().pointage);
