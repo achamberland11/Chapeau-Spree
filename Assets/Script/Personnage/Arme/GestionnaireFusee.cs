@@ -92,7 +92,7 @@ public class GestionnaireFusee : NetworkBehaviour
                 Runner.Despawn(networkObject);
                 return;
             }
-            //
+            //3.
             int nbObjetsTouches = Runner.LagCompensation.OverlapSphere(pointDetectionCollision.position, 0.5f, lanceur, infosCollisionsList, layersCollision, HitOptions.IncludePhysX);
 
             //4.

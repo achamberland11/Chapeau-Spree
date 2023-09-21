@@ -1,22 +1,33 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapeau : MonoBehaviour
+public class Chapeau : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    List<LagCompensatedHit> infosCollisionsList = new List<LagCompensatedHit>();
+    public LayerMask layersCollision;
+
+
+    public override void FixedUpdateNetwork()
     {
-        
+        if (Object.HasStateAuthority)
+        {
+            //2.
+            /*int nbJoueursTouche = Runner.LagCompensation.OverlapSphere(transform.position, 1, infosCollisionsList, layersCollision);*/
+
+            //3.
+            foreach (LagCompensatedHit objetTouche in infosCollisionsList)
+            {
+
+            }
+            //4.
+            Runner.Despawn(GetComponent<NetworkObject>());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter(Collider collision)
+/*    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Fantome")
         {
@@ -24,5 +35,5 @@ public class Chapeau : MonoBehaviour
             Debug.Log(collision.gameObject.GetComponent<JoueurReseau>().pointage);
             Destroy(gameObject, 0.1f);
         }
-    }
+    }*/
 }

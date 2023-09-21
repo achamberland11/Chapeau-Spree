@@ -164,7 +164,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -626,7 +626,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 823
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -745,6 +745,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
       propertyPath: m_Name
       value: CowboyHat
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
       propertyPath: m_IsActive
@@ -1038,6 +1042,10 @@ PrefabInstance:
       value: VikingHelmet
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a20ea7771cebbda4696ef82ef45481a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a20ea7771cebbda4696ef82ef45481a0, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1187,6 +1195,10 @@ PrefabInstance:
       value: Crown
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 598a1f45fefa08846b93be35e98f166e, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 598a1f45fefa08846b93be35e98f166e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1240,9 +1252,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 598a1f45fefa08846b93be35e98f166e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 73977455507063215}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 598a1f45fefa08846b93be35e98f166e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 756257492878654935}
   m_SourcePrefab: {fileID: 100100000, guid: 598a1f45fefa08846b93be35e98f166e, type: 3}
 --- !u!1 &4644965510254052491 stripped
 GameObject:
@@ -1286,37 +1295,16 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.3802454, y: 0.32370922, z: 0.3349797}
-  m_Center: {x: 0, y: 0.16185458, z: -0.000000044703484}
---- !u!135 &756257492878654935
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4644965510254052491}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 192
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 55
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.1901227
   m_Center: {x: 0, y: 0.16185458, z: -0.000000044703484}
 --- !u!4 &4644965510254287019 stripped
 Transform:
@@ -1334,6 +1322,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 565e3543feaac1b408a41f8c0d67febd, type: 3}
       propertyPath: m_Name
       value: PillboxHat
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 565e3543feaac1b408a41f8c0d67febd, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 565e3543feaac1b408a41f8c0d67febd, type: 3}
       propertyPath: m_IsActive
@@ -1483,6 +1475,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: cf015317a103ab34483db3f2dc6f0f59, type: 3}
       propertyPath: m_Name
       value: PoliceCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: cf015317a103ab34483db3f2dc6f0f59, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: cf015317a103ab34483db3f2dc6f0f59, type: 3}
       propertyPath: m_IsActive
@@ -1768,6 +1764,10 @@ PrefabInstance:
       value: MinerHat
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a9853556c4fc4d44087cd153918f7305, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a9853556c4fc4d44087cd153918f7305, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1915,6 +1915,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 290f57b34312fbf448d3b8ca6b6bd41d, type: 3}
       propertyPath: m_Name
       value: Sombrero
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 290f57b34312fbf448d3b8ca6b6bd41d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 290f57b34312fbf448d3b8ca6b6bd41d, type: 3}
       propertyPath: m_IsActive
@@ -2066,6 +2070,10 @@ PrefabInstance:
       value: ShowerCap
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c49b578c54f48fd47aca6b1eda6be743, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c49b578c54f48fd47aca6b1eda6be743, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2213,6 +2221,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 06c4131835f65024586454416f6b1f66, type: 3}
       propertyPath: m_Name
       value: MagicianHat
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 06c4131835f65024586454416f6b1f66, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 06c4131835f65024586454416f6b1f66, type: 3}
       propertyPath: m_IsActive

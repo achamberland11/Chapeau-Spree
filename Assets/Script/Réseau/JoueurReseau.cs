@@ -70,6 +70,9 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
             AudioListener audioListener = GetComponentInChildren<AudioListener>();
             audioListener.enabled = false;
 
+            // On appel la fonction pour l'assigner au tag de joueur réseau
+            Utilitaires.SetRenderLayerInChildren(modeleJoueur, LayerMask.NameToLayer("JoueurReseau"));
+
             Debug.Log("Un joueur réseau a été créé");
         }
     }
