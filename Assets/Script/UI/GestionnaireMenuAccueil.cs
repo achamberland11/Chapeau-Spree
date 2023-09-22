@@ -3,24 +3,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GestionnaireMenuAccueil : MonoBehaviour
 {
-    public TMP_InputField inputField;
+    [Header("Pannels")]
+    public GameObject panelNomDuJoueur;
+    public GameObject panelListeSessions;
+    public GameObject panelCreationSession;
+    public GameObject panelEtat;
+
+    [Header("InfosJoueurs")]
+    public TMP_InputField inputField_NomDuJoueur;
+
+    [Header("NouvelleSession")]
+    public TMP_InputField inputField_NomSession;
 
     void Start()
     {
         if (PlayerPrefs.HasKey("NomDuJoueur"))
-            inputField.text = PlayerPrefs.GetString("NomDuJoueur");
+            inputField_NomDuJoueur.text = PlayerPrefs.GetString("NomDuJoueur");
     }
 
-    public void BtnJoindrePartie()
+    void CacheTousLesPanels()
     {
-        PlayerPrefs.SetString("NomDuJoueur", inputField.text);
+        panelNomDuJoueur.SetActive(false);
+        panelListeSessions.SetActive(false);
+        panelCreationSession.SetActive(false);
+        panelEtat.SetActive(false);
+    }
+
+    public void BtnTrouveParties()
+    {
+        PlayerPrefs.SetString("NomDuJoueur", inputField_NomDuJoueur.text);
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("Niveau");
+
+        GestionnaireReseau gestionnaireReseau = FindFirstObjectByType<GestionnaireReseau>();
+        gestionnaireReseau.RejoindreLeLobby();
+
+        CacheTousLesPanels();
+        panelListeSessions.SetActive(true);
+        FindFirstObjectByType<GestionnaireListeSessions>(FindObjectsInactive.Include).ChercheDesSessions();
+
     }
 
-    
+    public void BtnNouvellePartie()
+    {
+        CacheTousLesPanels();
+        panelCreationSession.SetActive(true);
+    }
+
+    public void BtnCreationNouvelleSession()
+    {
+        GestionnaireReseau gestionnaireReseau = FindFirstObjectByType<GestionnaireReseau>();
+
+        gestionnaireReseau.CreationPartie(inputField_NomSession.text, "Niveau");
+
+        CacheTousLesPanels();
+        panelEtat.SetActive(true);
+    }
+
+    public void RejoindreServeur()
+    {
+        CacheTousLesPanels();
+        panelEtat.SetActive(true);
+
+
+    }
 }

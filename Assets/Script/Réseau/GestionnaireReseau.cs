@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Threading.Tasks;
 
 public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -21,18 +22,47 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     public Color[] couleurJoueurs;
 
     // pour mémoriser le component GestionnaireMouvementPersonnage du joueur
-    GestionnaireInputs gestionnaireInputs; 
+    GestionnaireInputs gestionnaireInputs;
+
+    GestionnaireListeSessions gestionnaireListeSessions;
+
+
+
+    private void Awake()
+    {
+        // Si déjà créé, on ne veut pas recréer le networkrunner
+        NetworkRunner RunnerDejaActif = FindFirstObjectByType<NetworkRunner>();
+        gestionnaireListeSessions = FindFirstObjectByType<GestionnaireListeSessions>(FindObjectsInactive.Include); //true pour les objets inactifs
+
+        if (RunnerDejaActif != null)
+            _runner = RunnerDejaActif;
+    }
+
+    void Start()
+    {
+        // Création d'une partie dès le départ
+        if (_runner == null)
+        {
+            /*  1.Ajout du component NetworkRunne au gameObject. On garde en mémoire
+            la référence à ce component dans la variable _runner.
+            2.Indique au NetworkRunner qu'il doit fournir les inputs au simulateur (Fusion)
+        */
+            _runner = gameObject.AddComponent<NetworkRunner>();
+            _runner.ProvideInput = true;
+
+        }
+        if (SceneManager.GetActiveScene().name != "Accueil")
+        {
+            // CreationPartie(GameMode.AutoHostOrClient, "TestSession",1);
+
+        }
+
+    }
+
 
     // Fonction asynchrone pour démarrer Fusion et créer une partie 
-    async void CreationPartie(GameMode mode)
+    async void CreationPartie(GameMode mode, string nomSession, int indexScene)
     {
-        /*  1.Ajout du component NetworkRunner au gameObject. On garde en mémoire
-            la référence à ce component dans la variable _runner.
-            2.Indique au NetworkRunner qu'il doit fournir les entrées (inputs) au  
-            simulateur (Fusion)
-        */
-        _runner = gameObject.AddComponent<NetworkRunner>();
-        _runner.ProvideInput = true;
 
         /*Méthode du NetworkRunner qui permet d'initialiser une partie
          * GameMode : reçu en argument. Valeur possible : Client, Host, Server, 
@@ -45,48 +75,15 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
-            SessionName = "Chambre test",
-            Scene = SceneManager.GetActiveScene().buildIndex,
+            SessionName = "IdDuLobby",
+            Scene = indexScene,
             PlayerCount = 9, //ici, on limite à 9 joueurs
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
 
         });
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Création d'une partie dès le départ
-        CreationPartie(GameMode.AutoHostOrClient);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void OnConnectedToServer(NetworkRunner runner)
-    {
-        
-    }
-
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
-    {
-        
-    }
-
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-    {
-        
-    }
-
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
-    {
-        
-    }
-
-    public void OnDisconnectedFromServer(NetworkRunner runner)
     {
         
     }
@@ -167,10 +164,6 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-    {
-        
-    }
 
     /*
      * Fonction appelée lorsqu'une connexion réseau est refusée ou lorsqu'un client perd
@@ -181,12 +174,99 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (shutdownReason == ShutdownReason.GameIsFull)
         {
-            Debug.Log("Le maximum de joueur est atteint. Réessayer plus tard");
+            Debug.Log("Le maximum de joueur est atteint. Réessayer plus tard.");
+        }
+    }
+
+    public void OnConnectedToServer(NetworkRunner runner)
+    {
+        Debug.Log("OnConnectedToServer");
+    }
+
+    public void OnDisconnectedFromServer(NetworkRunner runner)
+    {
+        Debug.Log("OnOnDisconnectedFromServer");
+    }
+
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+    {
+        Debug.Log("Connection demandée par = " + runner.GetPlayerUserId());
+    }
+
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+    {
+        Debug.Log("Connection refusée par = " + runner.GetPlayerUserId());
+    }
+
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        if (gestionnaireListeSessions == null)
+            return;
+
+        if (sessionList.Count == 0)
+        {
+            Debug.Log("Lobby rejoint. Aucune session active");
+            gestionnaireListeSessions.AucuneSessionTrouvee();
+        }
+        else
+        {
+            gestionnaireListeSessions.EffaceListe();
+
+            foreach (SessionInfo sessionInfo in sessionList)
+            {
+                gestionnaireListeSessions.AjouteListe(sessionInfo);
+                Debug.Log($"Session {sessionInfo.Name} trouvée. Nombre de joueurs = {sessionInfo.PlayerCount}");
+            }
         }
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
-        
+
+    }
+
+    public void RejoindreLeLobby()
+    {
+        Task tacheConnexionLobby = ConnextionAuLobby();
+    }
+
+    private async Task ConnextionAuLobby()
+    {
+        Debug.Log("Connexion au lobby démarée");
+        string nomDuLobby = "NomDuLobby";
+
+        StartGameResult resultat = await _runner.JoinSessionLobby(SessionLobby.Custom, nomDuLobby);
+
+        if (resultat.Ok)
+        {
+            Debug.Log("Connexion au lobby effectuée avec succès");
+        }
+        else
+        {
+            Debug.LogError($"Incapable de se connecter au lobby {nomDuLobby}");
+        }
+    }
+
+    public void CreationPartie(string nomSession, string nomScene)
+    {
+        int indexScene = SceneUtility.GetBuildIndexByScenePath($"Scenes/{nomScene}");
+        Debug.Log($"Création de la session {nomSession} scène {nomScene} build index {indexScene}");
+
+        CreationPartie(GameMode.Host, nomSession, indexScene);
+    }
+
+    public void RejoindrePartie(SessionInfo sessionInfo)
+    {
+        Debug.Log($"Rejoindre session {sessionInfo.Name}");
+        int indexScene = SceneManager.GetActiveScene().buildIndex;
+        CreationPartie(GameMode.Client, sessionInfo.Name, indexScene);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Debug.ClearDeveloperConsole();
+        }
     }
 }
