@@ -235,17 +235,19 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         //1.
         modelJoueur.gameObject.SetActive(false);
         hitboxRoot.HitboxRootActive = false;
+
         GameObject chapeauActif = joueurReseau.chapeau[joueurReseau.indexJoueur];
         chapeauActif.SetActive(false);
+
         GameObject chapeauARamasser = Instantiate(chapeauActif);
+
         chapeauARamasser.transform.position = chapeauActif.transform.position;
         chapeauARamasser.transform.parent = null;
         chapeauARamasser.SetActive(true);
         chapeauARamasser.GetComponent<Rigidbody>().isKinematic = false;
         chapeauARamasser.GetComponent<Rigidbody>().useGravity = true;
         chapeauARamasser.GetComponent<Collider>().enabled = true;
-        chapeauARamasser.GetComponent<SphereCollider>().enabled = true;
-        chapeauARamasser.AddComponent<Chapeau>();
+        chapeauARamasser.GetComponent<Chapeau>().enabled = true;
         chapeauARamasser.layer = chapeauActif.layer;
         //2.
         gestionnaireMouvementPersonnage.ActivationCharacterController(false);
