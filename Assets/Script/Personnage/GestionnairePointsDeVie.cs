@@ -55,6 +55,9 @@ public class GestionnairePointsDeVie : NetworkBehaviour
 
     GestionnaireMouvementPersonnage gestionnaireMouvementPersonnage;
     JoueurReseau joueurReseau;
+    NetworkObject networkObject;
+
+    public GameObject prefabChapeau;
 
 
     /*
@@ -66,6 +69,7 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         hitboxRoot = GetComponent<HitboxRoot>();
         gestionnaireMouvementPersonnage = GetComponent<GestionnaireMouvementPersonnage>();
         joueurReseau = GetComponent<JoueurReseau>();
+        networkObject = GetComponent<NetworkObject>();
     }
 
     /*
@@ -239,6 +243,15 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         GameObject chapeauActif = joueurReseau.chapeau[joueurReseau.indexJoueur];
         chapeauActif.SetActive(false);
 
+        Vector3 positionChapeau = chapeauActif.transform.position;
+        Quaternion oriantationChapeau = chapeauActif.transform.rotation;
+        // commande exécutée juste sur le serveur
+        Runner.Spawn(prefabChapeau, positionChapeau, oriantationChapeau, Object.InputAuthority, (runner, chapeau) =>
+        {
+            chapeau.GetComponent<Chapeaux>().ApparitionChapeau(Object.InputAuthority, networkObject, chapeauActif);
+        });
+
+        /*
         GameObject chapeauARamasser = Instantiate(chapeauActif);
 
         chapeauARamasser.transform.position = chapeauActif.transform.position;
@@ -247,8 +260,10 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         chapeauARamasser.GetComponent<Rigidbody>().isKinematic = false;
         chapeauARamasser.GetComponent<Rigidbody>().useGravity = true;
         chapeauARamasser.GetComponent<Collider>().enabled = true;
-        chapeauARamasser.GetComponent<Chapeau>().enabled = true;
+        chapeauARamasser.GetComponent<Chapeaux>().enabled = true;
         chapeauARamasser.layer = chapeauActif.layer;
+        */
+
         //2.
         gestionnaireMouvementPersonnage.ActivationCharacterController(false);
         //3.
