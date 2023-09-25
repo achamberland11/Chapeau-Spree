@@ -93,7 +93,7 @@ public class GestionnairePointsDeVie : NetworkBehaviour
      * Important : souvenez-vous que les variables ptsVie et estMort sont de type [Networked] et qu'une 
      * fonction sera automatiquement appelée lorsque leur valeur change.
     */
-    public void PersoEstTouche(string dommageFaitParQui, byte dommage)
+    public void PersoEstTouche(JoueurReseau dommageFaitParQui, byte dommage)
     {
         //1.
         if (estMort)
@@ -114,6 +114,10 @@ public class GestionnairePointsDeVie : NetworkBehaviour
             Debug.Log($"{Time.time} {transform.name} est mort");
             StartCoroutine(RessurectionServeur_CO());
             estMort = true;
+
+            /*Mise à jour du pointage du joueur qui a causé la mort en appelant la fonction 
+             * ChangementPointage() de ce joueur */
+            //dommageFaitParQui.GetComponent<GestionnairePointage>().ChangementPointage(dommageFaitParQui.nomDujoueur.ToString(), 1);
         }
     }
 
@@ -248,7 +252,7 @@ public class GestionnairePointsDeVie : NetworkBehaviour
         // commande exécutée juste sur le serveur
         Runner.Spawn(prefabChapeau, positionChapeau, oriantationChapeau, Object.InputAuthority, (runner, chapeau) =>
         {
-            chapeau.GetComponent<Chapeaux>().ApparitionChapeau(Object.InputAuthority, networkObject, chapeauActif);
+            chapeau.GetComponent<Chapeaux>().ApparitionChapeau(Object.InputAuthority, networkObject, joueurReseau.indexJoueur);
         });
 
         /*

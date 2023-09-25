@@ -33,7 +33,7 @@ public class GestionnaireFusee : NetworkBehaviour
     int vitesseFusee = 20;
 
     PlayerRef lanceur;
-    string nomLanceur;
+    JoueurReseau joueurLanceur;
     NetworkObject networkObject;
     NetworkObject lanceurNetworkObject;
 
@@ -50,13 +50,13 @@ public class GestionnaireFusee : NetworkBehaviour
   * porte le même nom.
   * 3.Création d'un timer réseau (TickTimer) d'une durée de 10 secondes
   */
-    public void LanceFusee(PlayerRef lanceur, NetworkObject lanceurNetworkObject, string nomLanceur)
+    public void LanceFusee(PlayerRef lanceur, NetworkObject lanceurNetworkObject, JoueurReseau joueurLanceur)
     {
         //1.
         networkObject = GetComponent<NetworkObject>();
         //2.
         this.lanceur = lanceur;
-        this.nomLanceur = nomLanceur;
+        this.joueurLanceur = joueurLanceur;
         this.lanceurNetworkObject = lanceurNetworkObject;
         //3.
         dureeVieFusee = TickTimer.CreateFromSeconds(Runner, 10);
@@ -117,7 +117,7 @@ public class GestionnaireFusee : NetworkBehaviour
                 {
                     GestionnairePointsDeVie gestionnairePointsDeVie = objetTouche.Hitbox.transform.root.GetComponent<GestionnairePointsDeVie>();
                     if (gestionnairePointsDeVie != null)
-                        gestionnairePointsDeVie.PersoEstTouche(nomLanceur, 20);
+                        gestionnairePointsDeVie.PersoEstTouche(joueurLanceur, 20);
                 }
                 //6.
                 Runner.Despawn(networkObject);

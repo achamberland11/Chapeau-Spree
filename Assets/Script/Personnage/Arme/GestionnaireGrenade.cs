@@ -23,7 +23,7 @@ public class GestionnaireGrenade : NetworkBehaviour
     public LayerMask layersCollision;
 
     PlayerRef lanceur;
-    string nomLanceur;
+    JoueurReseau joueurLanceur;
 
     TickTimer timerExplosion = TickTimer.None;
     List<LagCompensatedHit> infosCollisionsList = new List<LagCompensatedHit>();
@@ -43,7 +43,7 @@ public class GestionnaireGrenade : NetworkBehaviour
    * qui permet de distinguer la variable du paramètre de la fonction qui porte le même nom.
    * 4.Création d'un timer réseau (TickTimer) d'une durée de 2 secondes
    */
-    public void LanceGrenade(Vector3 forceDuLance, PlayerRef lanceur, string nomLanceur)
+    public void LanceGrenade(Vector3 forceDuLance, PlayerRef lanceur, JoueurReseau joueurLanceur)
     {
         //1.
         networkObject = GetComponent<NetworkObject>();
@@ -52,7 +52,7 @@ public class GestionnaireGrenade : NetworkBehaviour
         networkRigidbody.Rigidbody.AddForce(forceDuLance, ForceMode.Impulse);
         //3.
         this.lanceur = lanceur;
-        this.nomLanceur = nomLanceur;
+        this.joueurLanceur = joueurLanceur;
         //4.
         timerExplosion = TickTimer.CreateFromSeconds(Runner, 2);
     }
@@ -93,7 +93,7 @@ public class GestionnaireGrenade : NetworkBehaviour
                 {
                     GestionnairePointsDeVie gestionnairePointsDeVie = objetTouche.Hitbox.transform.root.GetComponent<GestionnairePointsDeVie>();
                     if (gestionnairePointsDeVie != null)
-                        gestionnairePointsDeVie.PersoEstTouche(nomLanceur, 10);
+                        gestionnairePointsDeVie.PersoEstTouche(joueurLanceur, 10);
                 }
                 //4.
                 Runner.Despawn(networkObject);

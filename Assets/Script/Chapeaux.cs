@@ -1,7 +1,8 @@
-using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Fusion;
 
 public class Chapeaux : NetworkBehaviour
 {
@@ -13,6 +14,13 @@ public class Chapeaux : NetworkBehaviour
     NetworkRigidbody networkRb;
     PlayerRef proprioChapeau;
     NetworkObject proprioNetworkObj;
+
+    public GameObject[] chapeaux;
+
+    private void Start()
+    {
+        
+    }
 
     public override void FixedUpdateNetwork()
     {
@@ -38,9 +46,11 @@ public class Chapeaux : NetworkBehaviour
                 foreach (LagCompensatedHit objTouche in infosCollisionsList)
                 {
                     GestionnairePointage gestionnairePointage = objTouche.Hitbox.transform.root.GetComponent<GestionnairePointage>();
+                    JoueurReseau joueur = objTouche.Hitbox.transform.root.GetComponent<JoueurReseau>();
                     if (gestionnairePointage != null)
                     {
                         Debug.Log("+1 points");
+                        gestionnairePointage.ChangementPointage(joueur.nomDujoueur.ToString(), 1);
                         Runner.Despawn(networkObj);
                     }
                 }
@@ -48,14 +58,24 @@ public class Chapeaux : NetworkBehaviour
         }
     }
 
-    public void ApparitionChapeau(PlayerRef _proprioChapeau, NetworkObject _proprioNetworkObj, GameObject modeleChapeau)
+    // Fonction éxécuté seulement sur le serveur
+    public void ApparitionChapeau(PlayerRef _proprioChapeau, NetworkObject _proprioNetworkObj, int indexChapeau)
     {
+        Debug.Log("Apparition Chapeau");
         networkObj = GetComponent<NetworkObject>();
         networkRb = GetComponent<NetworkRigidbody>();
         proprioChapeau = _proprioChapeau;
         proprioNetworkObj = _proprioNetworkObj;
 
-        GameObject chapeau = Instantiate(modeleChapeau, transform.position, transform.rotation, transform);
+        // Apparition du chapeau sur tout les clients
+
+        RPC_ApparitionChapeau(indexChapeau);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RPC_ApparitionChapeau(int indexChapeau, RpcInfo infos = default)
+    {
+        GameObject chapeau = chapeaux[indexChapeau];
         chapeau.SetActive(true);
         networkRb.InterpolationTarget = chapeau.transform;
     }

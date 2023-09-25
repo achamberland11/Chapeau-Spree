@@ -148,7 +148,7 @@ public class GestionnaireArmes : NetworkBehaviour
             // On appelle la fonction PersoEstTouche du joueur touché dans le script GestionnairePointsDeVie
             if (Object.HasStateAuthority)
             {
-                infosCollisions.Hitbox.transform.root.GetComponent<GestionnairePointsDeVie>().PersoEstTouche(joueurReseau.nomDujoueur.ToString(), 1);
+                infosCollisions.Hitbox.transform.root.GetComponent<GestionnairePointsDeVie>().PersoEstTouche(joueurReseau, 1);
             }
         }
         else if (infosCollisions.Collider != null)
@@ -261,7 +261,7 @@ public class GestionnaireArmes : NetworkBehaviour
             // commande exécutée juste sur le serveur
             Runner.Spawn(prefabGrenade, positionGrenade, orientationGrenade, Object.InputAuthority, (runner, laGrenade) =>
             {
-                laGrenade.GetComponent<GestionnaireGrenade>().LanceGrenade(vecteurDevant * 15, Object.InputAuthority, joueurReseau.nomDujoueur.ToString());
+                laGrenade.GetComponent<GestionnaireGrenade>().LanceGrenade(vecteurDevant * 15, Object.InputAuthority, joueurReseau);
             });
             //5.
             delaiTirGrenade = TickTimer.CreateFromSeconds(Runner, 1f);
@@ -305,7 +305,7 @@ public class GestionnaireArmes : NetworkBehaviour
             // commande exécutée juste sur le serveur uniquement
             Runner.Spawn(prefabFusee, positionFusee, orientationFusee, Object.InputAuthority, (runner, laFusee) =>
             {
-                laFusee.GetComponent<GestionnaireFusee>().LanceFusee(Object.InputAuthority, networkObject, joueurReseau.nomDujoueur.ToString());
+                laFusee.GetComponent<GestionnaireFusee>().LanceFusee(Object.InputAuthority, networkObject, joueurReseau);
             });
             //5.
             delaiTirfusee = TickTimer.CreateFromSeconds(Runner, 3f);
