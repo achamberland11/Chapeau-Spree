@@ -18,6 +18,8 @@ public class GestionnairePointage : NetworkBehaviour
     byte pointage { get; set; }
 
     GestionnaireAffichagePointage gestionnaireAffichagePointage;
+    GestionnaireInputs gestionnaireInputs;
+    
 
     /* Récupération du script GestionnaireAffichagePointage. Ce script se trouve sur le canvas
      * CanvasPointages.
@@ -25,6 +27,19 @@ public class GestionnairePointage : NetworkBehaviour
     void Awake()
     {
         gestionnaireAffichagePointage = FindFirstObjectByType<GestionnaireAffichagePointage>();
+        gestionnaireInputs = GetComponent<GestionnaireInputs>();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (Object.HasStateAuthority)
+        {
+            if (pointage >= 2)
+            {
+                gestionnaireAffichagePointage.AfficherPointageFinal();
+                gestionnaireInputs.DesactiverInput();
+            }
+        }
     }
 
     /* Fonction appelée de l'extérieur par le script JoueurReseau lorsqu'un nouveau joueur est

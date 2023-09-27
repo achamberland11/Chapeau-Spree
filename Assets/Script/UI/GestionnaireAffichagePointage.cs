@@ -16,6 +16,10 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
     static Dictionary<string, byte> infosJoueursPointages = new Dictionary<string, byte>();
 
     public TextMeshProUGUI[] txt_InfoPointageJoueurs;
+    public TextMeshProUGUI[] txt_InfoPointageJoueursFinal;
+
+    public GameObject panelPointage;
+    public GameObject panelPointageFinal;
 
     /* Fonction appelée de l'extérieur par le script GestionnairePointage. Lors du spawn d'un joueur,
      * on mémorise dans le dictionnaire son nom et son pointage. Par la suite, on appelle fonction 
@@ -59,6 +63,7 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
             i++;
         }
     }
+
     /* Fonction appelé de l'extérieur par le script GestionnairePointage lorsqu'un joueur 
      * quitte la partie.On supprime alors son entrée du dictionnaire et on rafraichit l'affichage.
     */
@@ -66,5 +71,30 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
     {
         infosJoueursPointages.Remove(nomJoueur);
         AffichePointage();
+    }
+
+    public void AfficherPointageFinal()
+    {
+        RPC_AffichePointageFinale();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RPC_AffichePointageFinale()
+    {
+        panelPointage.SetActive(false); 
+        panelPointageFinal.SetActive(true);
+
+        //1.
+        foreach (var zonTexte in txt_InfoPointageJoueursFinal)
+        {
+            zonTexte.text = string.Empty;
+        }
+        //2. 
+        var i = 0;
+        foreach (KeyValuePair<string, byte> itemDictio in infosJoueursPointages)
+        {
+            txt_InfoPointageJoueursFinal[i].text = $"{itemDictio.Key} : {itemDictio.Value} points";
+            i++;
+        }
     }
 }

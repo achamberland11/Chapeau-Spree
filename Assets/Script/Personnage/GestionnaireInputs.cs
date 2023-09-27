@@ -21,8 +21,12 @@ public class GestionnaireInputs : MonoBehaviour
     bool ilTir = false;
     bool ilLanceGrenade = false;
     bool ilLanceFusee = false;
+    bool peutTirer = true;
+    bool peutLancerGrenade = true;
+    bool peutLancerFusee = true;
     GestionnaireCameraLocale gestionnaireCameraLocale;
     GestionnaireMouvementPersonnage gestionnaireMouvementPersonnage;
+    GestionnairePointage gestionnairePointage;
 
     /*
      * Avant le Start(), on mémorise la référence au component GestionnaireCameraLocale de la caméra du joueur
@@ -31,6 +35,7 @@ public class GestionnaireInputs : MonoBehaviour
     {
         gestionnaireCameraLocale = GetComponentInChildren<GestionnaireCameraLocale>();
         gestionnaireMouvementPersonnage = GetComponentInChildren<GestionnaireMouvementPersonnage>();
+        gestionnairePointage = GetComponentInChildren<GestionnairePointage>();
     }
 
     /*
@@ -40,6 +45,10 @@ public class GestionnaireInputs : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        peutTirer = true;
+        peutLancerGrenade = true;
+        peutLancerFusee = true;
     }
 
     /*
@@ -70,16 +79,23 @@ public class GestionnaireInputs : MonoBehaviour
             ilSaute = true;
 
         //Tir
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && peutTirer)
             ilTir = true;
 
         // Grenade
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && peutLancerGrenade)
             ilLanceGrenade = true;
 
         // fusée
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && peutLancerFusee)
             ilLanceFusee = true;
+    }
+
+    public void DesactiverInput()
+    {
+        peutTirer = false;
+        peutLancerGrenade = false;
+        peutLancerFusee = false;
     }
 
     /*
