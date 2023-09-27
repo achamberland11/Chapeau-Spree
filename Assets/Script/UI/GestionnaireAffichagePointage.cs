@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Fusion;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 /* Script qui gère l'affichage du pointage. Notez qu'il s'agit d'un script Unity standard et non
  * d'un script Fusion.
@@ -96,5 +98,11 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
             txt_InfoPointageJoueursFinal[i].text = $"{itemDictio.Key} : {itemDictio.Value} points";
             i++;
         }
+    }
+
+
+    public void RetourAuMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -93,6 +94,15 @@ public class GestionnaireInputs : MonoBehaviour
 
     public void DesactiverInput()
     {
+        RPC_DesactiverInput();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RPC_DesactiverInput()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         peutTirer = false;
         peutLancerGrenade = false;
         peutLancerFusee = false;
