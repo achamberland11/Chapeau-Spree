@@ -11036,6 +11036,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasPointages
       objectReference: {fileID: 0}
+    - target: {fileID: 8248261370937249693, guid: df4bf690bf6554c0897a277844d822bc, type: 3}
+      propertyPath: m_TagString
+      value: CanvasPointages
+      objectReference: {fileID: 0}
     - target: {fileID: 9161057893560143831, guid: df4bf690bf6554c0897a277844d822bc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

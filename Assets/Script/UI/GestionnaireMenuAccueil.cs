@@ -68,7 +68,5 @@ public class GestionnaireMenuAccueil : MonoBehaviour
     {
         CacheTousLesPanels();
         panelEtat.SetActive(true);
-
-
     }
 }

@@ -75,11 +75,11 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
-            SessionName = "IdDuLobby",
+            SessionName = nomSession,
+            CustomLobbyName = "Chapeau Spree",
             Scene = indexScene,
             PlayerCount = 9, //ici, on limite à 9 joueurs
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
-
         });
     }
 

@@ -62,6 +62,8 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
             //Apple d'un RPC (fonction remote procedure call) en passant le nom du joueur enregistré
             RPC_ChangementdeNom(PlayerPrefs.GetString("NomDuJoueur"));
 
+            RPC_DefinirJoueurLocal();
+
             Debug.Log("Un joueur local a été créé");
         }
         else
@@ -107,7 +109,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     }
 
 
-    /* Déclenchement d'un remote procedure call (RPC). Ceci permet à un joueur (clien) de déclencher
+    /* Déclenchement d'un remote procedure call (RPC). Ceci permet à un joueur (client) de déclencher
      * une fonction sur un autre client. Entre paranthèses, on peut spécifier la source et la cible. Si
      * on ne le fait pas, il s'agit alors d'un RPC static qui sera envoyé à tous les clients.
      * Ici, le message est envoyé par le joueur qui possède le InputAuthority, c'est-à-dire le joueur
@@ -147,5 +149,12 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
         GetComponent<GestionnairePointage>().EnregistrementNom(nomDujoueur.ToString());
     }
 
+    [Rpc(RpcSources.InputAuthority, RpcTargets.InputAuthority)]
+    void RPC_DefinirJoueurLocal()
+    {
+        GameObject canvasPointages = GameObject.FindGameObjectWithTag("CanvasPointages");
+        GestionnaireAffichagePointage affichagePointage = canvasPointages.GetComponent<GestionnaireAffichagePointage>();
 
+        affichagePointage.joueurLocal = Object;
+    }
 }

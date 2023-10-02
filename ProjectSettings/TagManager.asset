@@ -7,6 +7,7 @@ TagManager:
   - IgnoreLayerChange
   - Hitbox
   - Fantome
+  - CanvasPointages
   layers:
   - Default
   - TransparentFX

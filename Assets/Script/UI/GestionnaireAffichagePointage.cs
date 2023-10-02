@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Fusion;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
 
 /* Script qui gère l'affichage du pointage. Notez qu'il s'agit d'un script Unity standard et non
  * d'un script Fusion.
@@ -22,6 +20,8 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
 
     public GameObject panelPointage;
     public GameObject panelPointageFinal;
+
+    public NetworkObject joueurLocal;
 
     /* Fonction appelée de l'extérieur par le script GestionnairePointage. Lors du spawn d'un joueur,
      * on mémorise dans le dictionnaire son nom et son pointage. Par la suite, on appelle fonction 
@@ -100,9 +100,9 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
         }
     }
 
-
     public void RetourAuMenu()
     {
-        SceneManager.LoadScene(0);
+        Runner.Despawn(joueurLocal);
+        RetourMenu.RetournerAuMenu();
     }
 }
