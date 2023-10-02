@@ -37,9 +37,15 @@ public class GestionnairePointage : NetworkBehaviour
             if (pointage >= 10)
             {
                 gestionnaireAffichagePointage.AfficherPointageFinal();
-                gestionnaireInputs.DesactiverInput();
+                RPC_DesactiverInput();
             }
         }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_DesactiverInput()
+    {
+        gestionnaireInputs.DesactiverInput();
     }
 
     /* Fonction appelée de l'extérieur par le script JoueurReseau lorsqu'un nouveau joueur est

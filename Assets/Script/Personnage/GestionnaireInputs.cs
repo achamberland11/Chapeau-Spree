@@ -94,12 +94,7 @@ public class GestionnaireInputs : MonoBehaviour
 
     public void DesactiverInput()
     {
-        RPC_DesactiverInput();
-    }
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    void RPC_DesactiverInput()
-    {
+        Debug.Log("RPC INPUT");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -127,7 +122,7 @@ public class GestionnaireInputs : MonoBehaviour
             appuieBoutonTir = ilTir,
             appuieBoutonGrenade = ilLanceGrenade,
             appuieBoutonFusee = ilLanceFusee
-    };
+        };
 
         ilSaute = false;
         ilTir = false;
@@ -135,6 +130,5 @@ public class GestionnaireInputs : MonoBehaviour
         ilLanceFusee = false;
 
         return donneesInputReseau;
-
     }
 }
