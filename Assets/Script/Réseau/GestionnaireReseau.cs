@@ -147,6 +147,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        Debug.Log("Player Left");
         Destroy(gameObject);
         SceneManager.LoadScene(0);
 
@@ -179,6 +180,11 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
         {
             Debug.Log("Le maximum de joueur est atteint. Réessayer plus tard.");
         }
+
+
+        Debug.Log("Player Left");
+        Destroy(gameObject);
+        SceneManager.LoadScene(0);
     }
 
     public void OnConnectedToServer(NetworkRunner runner)

@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using Fusion;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /* Script qui gère l'affichage du pointage. Notez qu'il s'agit d'un script Unity standard et non
  * d'un script Fusion.
@@ -106,9 +107,20 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
 
     public void RetourAuMenu()
     {
-        Runner.Despawn(joueurLocal);
-        Runner.Disconnect(refJoueur);
-        RetourMenu.RetournerAuMenu();
+        Debug.Log("Retour Au Menu");
+        //Runner.Despawn(joueurLocal);
+        if (joueurLocal.HasStateAuthority)
+        {
+            Debug.Log("Serveur");
+            Runner.Shutdown();
+            RPC_RetourAuMenu();
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RPC_RetourAuMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator TimerRetourMenu()
@@ -121,5 +133,6 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
             txt_TempsRetourMenu.SetText("Retour au Menu : " + temps.ToString());
         }
         RetourAuMenu();
+        StopCoroutine(TimerRetourMenu());
     }
 }
