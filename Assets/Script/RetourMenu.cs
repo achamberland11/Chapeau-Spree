@@ -7,6 +7,5 @@ public class RetourMenu : MonoBehaviour
 {
     public static void RetournerAuMenu()
     {
-        SceneManager.LoadScene(0);
     }
 }

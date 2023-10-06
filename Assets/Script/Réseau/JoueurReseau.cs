@@ -23,6 +23,7 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
     [Networked] public int pointage { get; set; }
 
     public static JoueurReseau Local; //.2
+    public PlayerRef refJoueur;
 
     public Transform modeleJoueur;
 
@@ -156,5 +157,6 @@ public class JoueurReseau : NetworkBehaviour, IPlayerLeft //1.
         GestionnaireAffichagePointage affichagePointage = canvasPointages.GetComponent<GestionnaireAffichagePointage>();
 
         affichagePointage.joueurLocal = Object;
+        affichagePointage.refJoueur = this.refJoueur;
     }
 }

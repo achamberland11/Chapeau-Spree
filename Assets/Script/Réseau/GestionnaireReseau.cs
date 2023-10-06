@@ -135,6 +135,7 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
             Comme j'ai seulement 9 couleurs de définies, je m'assure de ne pas dépasser la longueur de mon tableau*/
             nvJoueur.maCouleur = couleurJoueurs[nbJoueurs];
             nvJoueur.indexJoueur = nbJoueurs;
+            nvJoueur.refJoueur = player;
             nbJoueurs++;
             if (nbJoueurs >= 9) nbJoueurs = 0;
         }
@@ -146,7 +147,9 @@ public class GestionnaireReseau : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        
+        Destroy(gameObject);
+        SceneManager.LoadScene(0);
+
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)

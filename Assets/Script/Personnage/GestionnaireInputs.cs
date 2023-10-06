@@ -94,7 +94,6 @@ public class GestionnaireInputs : MonoBehaviour
 
     public void DesactiverInput()
     {
-        Debug.Log("RPC INPUT");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Fusion;
+using System.Collections;
 
 /* Script qui gère l'affichage du pointage. Notez qu'il s'agit d'un script Unity standard et non
  * d'un script Fusion.
@@ -17,11 +18,13 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
 
     public TextMeshProUGUI[] txt_InfoPointageJoueurs;
     public TextMeshProUGUI[] txt_InfoPointageJoueursFinal;
+    public TextMeshProUGUI txt_TempsRetourMenu;
 
     public GameObject panelPointage;
     public GameObject panelPointageFinal;
 
     public NetworkObject joueurLocal;
+    public PlayerRef refJoueur;
 
     /* Fonction appelée de l'extérieur par le script GestionnairePointage. Lors du spawn d'un joueur,
      * on mémorise dans le dictionnaire son nom et son pointage. Par la suite, on appelle fonction 
@@ -85,6 +88,7 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
     {
         panelPointage.SetActive(false); 
         panelPointageFinal.SetActive(true);
+        StartCoroutine(TimerRetourMenu());
 
         //1.
         foreach (var zonTexte in txt_InfoPointageJoueursFinal)
@@ -103,6 +107,19 @@ public class GestionnaireAffichagePointage : NetworkBehaviour
     public void RetourAuMenu()
     {
         Runner.Despawn(joueurLocal);
+        Runner.Disconnect(refJoueur);
         RetourMenu.RetournerAuMenu();
+    }
+
+    IEnumerator TimerRetourMenu()
+    {
+        int temps = 10;
+        while (temps > 0)
+        {
+            yield return new WaitForSeconds(1);
+            temps--;
+            txt_TempsRetourMenu.SetText("Retour au Menu : " + temps.ToString());
+        }
+        RetourAuMenu();
     }
 }
