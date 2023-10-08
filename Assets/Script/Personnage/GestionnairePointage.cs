@@ -34,7 +34,7 @@ public class GestionnairePointage : NetworkBehaviour
     {
         if (Object.HasStateAuthority)
         {
-            if (pointage >= 2)
+            if (pointage >= 10)
             {
                 gestionnaireAffichagePointage.AfficherPointageFinal();
                 RPC_DesactiverInput();
